@@ -71,24 +71,42 @@ let coursesArray = [
 ];
 for (const course of coursesArray) {
     let div= document.createElement('div');
+    div.classList.add('course');
     for (const property in course) {
-        let propDiv = document.createElement('div');
-        if(property === 'modules') {
-            let span = document.createElement('span');
-            span.innerText = 'modules:';
-            propDiv.appendChild(span);
-            let ul=document.createElement('ul');
-            for (const module of course[property]) {
+        if( property === 'monthDuration' ) {
+            let durationsDiv = document.createElement('div');
+            durationsDiv.classList.add('durations');
+            let monthDiv = document.createElement('div');
+            monthDiv.classList.add('month');
+            monthDiv.innerText = `monthDuration: ${course.monthDuration}`;
+            let hourDiv = document.createElement('div');
+            hourDiv.classList.add('hour');
+            hourDiv.innerText = `hourDuration: ${course.hourDuration}`;
+            durationsDiv.append(monthDiv, hourDiv);
+            div.appendChild(durationsDiv);
+        }
+        else if( property === 'hourDuration' ) {}
+        else if (property === 'modules') {
+            let modulesDiv = document.createElement('div');
+            modulesDiv.classList.add('modules');
+            let label = document.createElement('span');
+            label.innerText = 'Modules:';
+            modulesDiv.appendChild(label);
+            let ul = document.createElement('ul');
+            for (const module of course.modules) {
                 let li = document.createElement('li');
                 li.innerText = module;
                 ul.appendChild(li);
             }
-            propDiv.appendChild(ul);
+            modulesDiv.appendChild(ul);
+            div.appendChild(modulesDiv);
         }
-        else{
-            propDiv.innerText = `${property}: ${course[property]}`;
+        else if (property === 'title'){
+            let title = document.createElement('h2');
+            title.classList.add('title');
+            title.innerText = course.title;
+            div.appendChild(title);
         }
-        div.appendChild(propDiv);
     }
     document.body.appendChild(div);
 }
